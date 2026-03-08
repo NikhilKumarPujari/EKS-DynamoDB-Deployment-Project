@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>🚀 DevOps User Form</title>
+
+<style>
+
+body{
+font-family: Arial, Helvetica, sans-serif;
+margin:0;
+padding:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+url("https://images.unsplash.com/photo-1605902711622-cfb43c4437d1");
+background-size:cover;
+background-position:center;
+color:white;
+overflow:auto;
+}
+
+/* floating emoji animation */
+
+.emoji{
+position:fixed;
+font-size:30px;
+animation: float 8s infinite linear;
+opacity:0.7;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-100vh)}
+}
+
+.container{
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+padding:30px;
+border-radius:15px;
+width:450px;
+box-shadow:0 20px 40px rgba(0,0,0,0.5);
+animation:fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(30px)}
+to{opacity:1; transform:translateY(0)}
+}
+
+h1{
+text-align:center;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+font-size:14px;
+margin-bottom:20px;
+color:#ddd;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:6px;
+font-size:14px;
+}
+
+button{
+width:48%;
+padding:12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:14px;
+margin-top:10px;
+transition:0.3s;
+}
+
+.submit{
+background:#00c853;
+color:white;
+}
+
+.load{
+background:#2962ff;
+color:white;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 5px 20px rgba(0,0,0,0.5);
+}
+
+table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+background:white;
+color:black;
+border-radius:6px;
+overflow:hidden;
+}
+
+th,td{
+padding:8px;
+border-bottom:1px solid #ddd;
+}
+
+th{
+background:#f0f0f0;
+}
+
+.arch{
+margin-top:25px;
+font-size:14px;
+line-height:1.6;
+}
+
+.arch span{
+color:#00e5ff;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- floating devops emojis -->
+<div class="emoji" style="left:5%">🐳</div>
+<div class="emoji" style="left:25%">☸️</div>
+<div class="emoji" style="left:45%">🚀</div>
+<div class="emoji" style="left:65%">☁️</div>
+<div class="emoji" style="left:85%">⚙️</div>
+
+<div class="container">
+
+<h1>🚀 DevOps User Form</h1>
+<p class="subtitle">Containerized Application deployed in eks acces with loadbalancer on  AWS Cloud ☁️</p>
+
+<input id="name" placeholder="👤 Enter Name">
+<input id="email" placeholder="📧 Enter Email">
+
+<div style="display:flex;justify-content:space-between;">
+<button class="submit" onclick="save()">💾 Submit</button>
+<button class="load" onclick="load()">📂 Load Data</button>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>👤 Name</th>
+<th>📧 Email</th>
+</tr>
+</thead>
+
+<tbody id="data"></tbody>
+
+</table>
+
+<div class="arch">
+
+<h3>⚙️ DevOps Architecture</h3>
+
+<p>
+This project demonstrates a <span>Cloud Native DevOps pipeline</span>.
+</p>
+
+<p>
+🐳 Application is packaged as a <span>Docker container</span>.
+</p>
+
+<p>
+📦 Image is pushed to <span>AWS ECR</span>.
+</p>
+
+<p>
+☸️ Container is deployed to <span>AWS EKS (Kubernetes)</span>.
+</p>
+
+<p>
+🌐 Traffic is exposed using a <span>Load Balancer</span>.
+</p>
+
+<p>
+🗄️ User data is stored in <span>AWS DynamoDB</span>.
+</p>
+
+<p>
+🚀 This architecture ensures <span>scalability, high availability and cloud native deployment</span>.
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+function save(){
+
+fetch("/add",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+name:document.getElementById("name").value,
+email:document.getElementById("email").value
+})
+})
+.then(res=>res.json())
+.then(data=>{
+alert("✅ User Saved to DynamoDB!")
+})
+
+}
+
+function load(){
+
+fetch("/get")
+.then(res=>res.json())
+.then(data=>{
+
+let list=document.getElementById("data")
+list.innerHTML=""
+
+data.forEach(u=>{
+list.innerHTML+=`
+<tr>
+<td>${u.name}</td>
+<td>${u.email}</td>
+</tr>
+`
+})
+
+})
+
+}
+
+</script>
+
+</body>
+</html>
