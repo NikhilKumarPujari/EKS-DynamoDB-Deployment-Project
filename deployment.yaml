@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dynamodb-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dynamodb-app
+  template:
+    metadata:
+      labels:
+        app: dynamodb-app
+    spec:
+      containers:
+      - name: dynamodb-app
+        image: id-.dkr.ecr.us-east-1.amazonaws.com/dynamodb-app:latest
+        ports:
+        - containerPort: 5000
+
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: AWS_ACCESS_KEY_ID
+
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: AWS_SECRET_ACCESS_KEY
+
+        - name: AWS_DEFAULT_REGION
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: AWS_DEFAULT_REGION
